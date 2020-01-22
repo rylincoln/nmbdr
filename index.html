@@ -37,9 +37,10 @@
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="data/ROUTE_2.js"></script>
-        <script src="data/SHOPPING_3.js"></script>
-        <script src="data/FUEL_4.js"></script>
-        <script src="data/WAYPOINTS_5.js"></script>
+        <script src="data/ROUTE_3.js"></script>
+        <script src="data/SHOPPING_4.js"></script>
+        <script src="data/FUEL_5.js"></script>
+        <script src="data/WAYPOINTS_6.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -204,45 +205,6 @@
                 interactive: true,
             }
                     break;
-                case 'tofromtrail':
-                    return {
-                pane: 'pane_ROUTE_2',
-                opacity: 1,
-                color: 'rgba(149,149,149,1.0)',
-                dashArray: '',
-                lineCap: 'round',
-                lineJoin: 'round',
-                weight: 3.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case 'trail':
-                    return {
-                pane: 'pane_ROUTE_2',
-                opacity: 1,
-                color: 'rgba(83,83,83,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 4.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                default:
-                    return {
-                pane: 'pane_ROUTE_2',
-                opacity: 1,
-                color: 'rgba(89,229,178,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 1.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
             }
         }
         map.createPane('pane_ROUTE_2');
@@ -259,7 +221,192 @@
         });
         bounds_group.addLayer(layer_ROUTE_2);
         map.addLayer(layer_ROUTE_2);
-        function pop_SHOPPING_3(feature, layer) {
+        function pop_ROUTE_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(feature.properties['name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cmt'] !== null ? Autolinker.link(feature.properties['cmt'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['desc'] !== null ? Autolinker.link(feature.properties['desc'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['src'] !== null ? Autolinker.link(feature.properties['src'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link1_href'] !== null ? Autolinker.link(feature.properties['link1_href'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link1_text'] !== null ? Autolinker.link(feature.properties['link1_text'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link1_type'] !== null ? Autolinker.link(feature.properties['link1_type'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link2_href'] !== null ? Autolinker.link(feature.properties['link2_href'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link2_text'] !== null ? Autolinker.link(feature.properties['link2_text'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['link2_type'] !== null ? Autolinker.link(feature.properties['link2_type'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['number'] !== null ? Autolinker.link(feature.properties['number'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['type'] !== null ? Autolinker.link(feature.properties['type'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gpxx_TrackExtension'] !== null ? Autolinker.link(feature.properties['gpxx_TrackExtension'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ROUTE_3_0(feature) {
+            switch(String(feature.properties['name'])) {
+                case 'NM1 Dell City to Ruidoso':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(46,126,200,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NM2 Ruidoso to T or C':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(124,223,17,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NM3 T or C to Reserve':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(195,112,211,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NM4 Reserve to Fence Lake':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(214,187,48,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NM5 Fence Lake to Grants':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(201,80,141,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NM6 Grants  to Cuba':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(206,105,85,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NM7 Cuba to END':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(54,20,221,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'To COBDR':
+                    return {
+                pane: 'pane_ROUTE_3',
+                opacity: 1,
+                color: 'rgba(86,238,109,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ROUTE_3');
+        map.getPane('pane_ROUTE_3').style.zIndex = 403;
+        map.getPane('pane_ROUTE_3').style['mix-blend-mode'] = 'normal';
+        var layer_ROUTE_3 = new L.geoJson(json_ROUTE_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ROUTE_3',
+            layerName: 'layer_ROUTE_3',
+            pane: 'pane_ROUTE_3',
+            onEachFeature: pop_ROUTE_3,
+            style: style_ROUTE_3_0,
+        });
+        bounds_group.addLayer(layer_ROUTE_3);
+        map.addLayer(layer_ROUTE_3);
+        function pop_SHOPPING_4(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -298,180 +445,180 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_SHOPPING_3_0() {
+        function style_SHOPPING_4_0() {
             return {
-                pane: 'pane_SHOPPING_3',
+                pane: 'pane_SHOPPING_4',
         rotationAngle: 0.0,
         rotationOrigin: 'center center',
         icon: L.icon({
             iconUrl: 'markers/city_building.svg',
-            iconSize: [30.4, 30.4]
-        }),
-                interactive: true,
-            }
-        }
-        map.createPane('pane_SHOPPING_3');
-        map.getPane('pane_SHOPPING_3').style.zIndex = 403;
-        map.getPane('pane_SHOPPING_3').style['mix-blend-mode'] = 'normal';
-        var layer_SHOPPING_3 = new L.geoJson(json_SHOPPING_3, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_SHOPPING_3',
-            layerName: 'layer_SHOPPING_3',
-            pane: 'pane_SHOPPING_3',
-            onEachFeature: pop_SHOPPING_3,
-            pointToLayer: function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.marker(latlng, style_SHOPPING_3_0(feature));
-            },
-        });
-        bounds_group.addLayer(layer_SHOPPING_3);
-        map.addLayer(layer_SHOPPING_3);
-        function pop_FUEL_4(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                    if (typeof layer.closePopup == 'function') {
-                        layer.closePopup();
-                    } else {
-                        layer.eachLayer(function(feature){
-                            feature.closePopup()
-                        });
-                    }
-                },
-                mouseover: highlightFeature,
-            });
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(feature.properties['name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['cmt'] !== null ? Autolinker.link(feature.properties['cmt'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['desc'] !== null ? Autolinker.link(feature.properties['desc'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['sym'] !== null ? Autolinker.link(feature.properties['sym'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['icon_exp'] !== null ? Autolinker.link(feature.properties['icon_exp'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_FUEL_4_0() {
-            return {
-                pane: 'pane_FUEL_4',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/conveneince.svg',
-            iconSize: [30.4, 30.4]
-        }),
-                interactive: true,
-            }
-        }
-        map.createPane('pane_FUEL_4');
-        map.getPane('pane_FUEL_4').style.zIndex = 404;
-        map.getPane('pane_FUEL_4').style['mix-blend-mode'] = 'normal';
-        var layer_FUEL_4 = new L.geoJson(json_FUEL_4, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_FUEL_4',
-            layerName: 'layer_FUEL_4',
-            pane: 'pane_FUEL_4',
-            onEachFeature: pop_FUEL_4,
-            pointToLayer: function (feature, latlng) {
-                var context = {
-                    feature: feature,
-                    variables: {}
-                };
-                return L.marker(latlng, style_FUEL_4_0(feature));
-            },
-        });
-        bounds_group.addLayer(layer_FUEL_4);
-        map.addLayer(layer_FUEL_4);
-        function pop_WAYPOINTS_5(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                    if (typeof layer.closePopup == 'function') {
-                        layer.closePopup();
-                    } else {
-                        layer.eachLayer(function(feature){
-                            feature.closePopup()
-                        });
-                    }
-                },
-                mouseover: highlightFeature,
-            });
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(feature.properties['name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['cmt'] !== null ? Autolinker.link(feature.properties['cmt'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['desc'] !== null ? Autolinker.link(feature.properties['desc'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['sym'] !== null ? Autolinker.link(feature.properties['sym'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['icon_exp'] !== null ? Autolinker.link(feature.properties['icon_exp'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_WAYPOINTS_5_0() {
-            return {
-                pane: 'pane_WAYPOINTS_5',
-        rotationAngle: 0.0,
-        rotationOrigin: 'center center',
-        icon: L.icon({
-            iconUrl: 'markers/Cross1.svg',
             iconSize: [22.799999999999997, 22.799999999999997]
         }),
                 interactive: true,
             }
         }
-        map.createPane('pane_WAYPOINTS_5');
-        map.getPane('pane_WAYPOINTS_5').style.zIndex = 405;
-        map.getPane('pane_WAYPOINTS_5').style['mix-blend-mode'] = 'normal';
-        var layer_WAYPOINTS_5 = new L.geoJson(json_WAYPOINTS_5, {
+        map.createPane('pane_SHOPPING_4');
+        map.getPane('pane_SHOPPING_4').style.zIndex = 404;
+        map.getPane('pane_SHOPPING_4').style['mix-blend-mode'] = 'normal';
+        var layer_SHOPPING_4 = new L.geoJson(json_SHOPPING_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_WAYPOINTS_5',
-            layerName: 'layer_WAYPOINTS_5',
-            pane: 'pane_WAYPOINTS_5',
-            onEachFeature: pop_WAYPOINTS_5,
+            dataVar: 'json_SHOPPING_4',
+            layerName: 'layer_SHOPPING_4',
+            pane: 'pane_SHOPPING_4',
+            onEachFeature: pop_SHOPPING_4,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.marker(latlng, style_WAYPOINTS_5_0(feature));
+                return L.marker(latlng, style_SHOPPING_4_0(feature));
             },
         });
-        bounds_group.addLayer(layer_WAYPOINTS_5);
-        map.addLayer(layer_WAYPOINTS_5);
+        bounds_group.addLayer(layer_SHOPPING_4);
+        map.addLayer(layer_SHOPPING_4);
+        function pop_FUEL_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(feature.properties['name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cmt'] !== null ? Autolinker.link(feature.properties['cmt'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['desc'] !== null ? Autolinker.link(feature.properties['desc'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['sym'] !== null ? Autolinker.link(feature.properties['sym'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['icon_exp'] !== null ? Autolinker.link(feature.properties['icon_exp'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_FUEL_5_0() {
+            return {
+                pane: 'pane_FUEL_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/conveneince.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_FUEL_5');
+        map.getPane('pane_FUEL_5').style.zIndex = 405;
+        map.getPane('pane_FUEL_5').style['mix-blend-mode'] = 'normal';
+        var layer_FUEL_5 = new L.geoJson(json_FUEL_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_FUEL_5',
+            layerName: 'layer_FUEL_5',
+            pane: 'pane_FUEL_5',
+            onEachFeature: pop_FUEL_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_FUEL_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_FUEL_5);
+        map.addLayer(layer_FUEL_5);
+        function pop_WAYPOINTS_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(feature.properties['name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cmt'] !== null ? Autolinker.link(feature.properties['cmt'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['desc'] !== null ? Autolinker.link(feature.properties['desc'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['sym'] !== null ? Autolinker.link(feature.properties['sym'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['icon_exp'] !== null ? Autolinker.link(feature.properties['icon_exp'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_WAYPOINTS_6_0() {
+            return {
+                pane: 'pane_WAYPOINTS_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/Cross1.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_WAYPOINTS_6');
+        map.getPane('pane_WAYPOINTS_6').style.zIndex = 406;
+        map.getPane('pane_WAYPOINTS_6').style['mix-blend-mode'] = 'normal';
+        var layer_WAYPOINTS_6 = new L.geoJson(json_WAYPOINTS_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WAYPOINTS_6',
+            layerName: 'layer_WAYPOINTS_6',
+            pane: 'pane_WAYPOINTS_6',
+            onEachFeature: pop_WAYPOINTS_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_WAYPOINTS_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_WAYPOINTS_6);
+        map.addLayer(layer_WAYPOINTS_6);
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
             position: 'topleft',
@@ -483,10 +630,10 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/WAYPOINTS_5.png" /> WAYPOINTS': layer_WAYPOINTS_5,'<img src="legend/FUEL_4.png" /> FUEL': layer_FUEL_4,'<img src="legend/SHOPPING_3.png" /> SHOPPING': layer_SHOPPING_3,'ROUTE<br /><table><tr><td style="text-align: center;"><img src="legend/ROUTE_2_easy0.png" /></td><td>easy</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_expert1.png" /></td><td>expert</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_gas2.png" /></td><td>gas</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_tofromtrail3.png" /></td><td>tofromtrail</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_trail4.png" /></td><td>trail</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_5.png" /></td><td></td></tr></table>': layer_ROUTE_2,"OpenStreetMap": layer_OpenStreetMap_1,"Satellite": layer_Satellite_0,},{collapsed:true}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/WAYPOINTS_6.png" /> WAYPOINTS': layer_WAYPOINTS_6,'<img src="legend/FUEL_5.png" /> FUEL': layer_FUEL_5,'<img src="legend/SHOPPING_4.png" /> SHOPPING': layer_SHOPPING_4,'ROUTE<br /><table><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM1DellCitytoRuidoso0.png" /></td><td>NM1 Dell City to Ruidoso</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM2RuidosotoTorC1.png" /></td><td>NM2 Ruidoso to T or C</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM3TorCtoReserve2.png" /></td><td>NM3 T or C to Reserve</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM4ReservetoFenceLake3.png" /></td><td>NM4 Reserve to Fence Lake</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM5FenceLaketoGrants4.png" /></td><td>NM5 Fence Lake to Grants</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM6GrantstoCuba5.png" /></td><td>NM6 Grants  to Cuba</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_NM7CubatoEND6.png" /></td><td>NM7 Cuba to END</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_3_ToCOBDR7.png" /></td><td>To COBDR</td></tr></table>': layer_ROUTE_3,'ROUTE<br /><table><tr><td style="text-align: center;"><img src="legend/ROUTE_2_easy0.png" /></td><td>easy</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_expert1.png" /></td><td>expert</td></tr><tr><td style="text-align: center;"><img src="legend/ROUTE_2_gas2.png" /></td><td>gas</td></tr></table>': layer_ROUTE_2,"OpenStreetMap": layer_OpenStreetMap_1,"Satellite": layer_Satellite_0,}).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_WAYPOINTS_5,
+            layer: layer_WAYPOINTS_6,
             initial: false,
             hideMarkerOnCollapse: true,
             propertyName: 'name'}));
