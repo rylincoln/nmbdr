@@ -1,2 +1,0 @@
-# nmbdr
-New Mexico BDR
