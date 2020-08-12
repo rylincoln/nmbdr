@@ -90,8 +90,14 @@
             minNativeZoom: 5,
             maxNativeZoom: 21
         });
+        
         layer_Satellite_0;
-        map.addLayer(layer_Satellite_0);
+        var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+            googleHybrid;
+        map.addLayer(googleHybrid);
         var layer_OpenStreetMap_1 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             opacity: 1.0,
             attribution: '',
